@@ -27,6 +27,11 @@ where
     cmd.envs(envs);
     cmd.current_dir(path).arg("test");
 
+    if std::env::var_os("WASM_PACK_BUILD_STD").is_some() {
+        cmd.arg("-Z");
+        cmd.arg("build-std");
+    }
+
     if PBAR.quiet() {
         cmd.arg("--quiet");
     }

@@ -84,6 +84,11 @@ pub fn cargo_build_wasm(
     let mut cmd = Command::new("cargo");
     cmd.current_dir(path).arg("build").arg("--lib");
 
+    if std::env::var_os("WASM_PACK_BUILD_STD").is_some() {
+        cmd.arg("-Z");
+        cmd.arg("build-std");
+    }
+
     if PBAR.quiet() {
         cmd.arg("--quiet");
     }
@@ -133,6 +138,11 @@ pub fn cargo_build_wasm_tests(
     let mut cmd = Command::new("cargo");
 
     cmd.current_dir(path).arg("build").arg("--tests");
+
+    if std::env::var_os("WASM_PACK_BUILD_STD").is_some() {
+        cmd.arg("-Z");
+        cmd.arg("build-std");
+    }
 
     if PBAR.quiet() {
         cmd.arg("--quiet");
